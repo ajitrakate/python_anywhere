@@ -1,0 +1,42 @@
+{% extends 'base1.html' %}
+
+ {% block title%}  Buttons{% endblock %}
+
+{% block body%}
+  <div class="container">
+    {% if buttons%}
+                  {% for button in buttons%}
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{button.name}}</h5>
+        <h6 class="card-text">Status : {{button.status}}</h6>
+        <p class="card-text"><small class="text-muted">{{button.desc}}</small></p>
+        <p class="card-text"><small class="text-muted">{{button.last_updated}}</small></p>
+      </div>
+      <form method="post" action="{% url 'change_status' next button.id%}">
+          {% csrf_token %}
+        <div class="custom-control custom-radio m-2">
+          <input type="radio" id="customRadio1_{{button.name}}" name="{{button.name}}" class="custom-control-input" value="ON" required>
+          <label class="custom-control-label" for="customRadio1_{{button.name}}">ON</label>
+        </div>
+        <div class="custom-control custom-radio m-2">
+          <input type="radio" id="customRadio2_{{button.name}}" name="{{button.name}}" class="custom-control-input" value="OFF">
+          <label class="custom-control-label" for="customRadio2_{{button.name}}">OFF</label>
+        </div>
+        <button class="btn btn-primary m-2" type="submit">Change</button>
+      </form>
+    </div> 
+          
+                
+              
+                  {% endfor %}
+
+              {% else %}
+                      <h2>You have no buttons to control</h2>
+              {% endif %}
+            
+  </div>
+
+
+{% endblock%}
